@@ -42,6 +42,7 @@ const authenticateToken = async (request, response, next) => {
         response.status(401);
         response.send("Invalid JWT token");
       } else {
+        request.username = payload.username;
         next();
       }
     });
@@ -109,11 +110,91 @@ app.post("/login", async (request, response) => {
   }
 });
 
-//API 3
-app.get(
-  "/user/tweets/feed/",
-  authenticateToken,
-  async (request, response) => {}
-);
+//API 3 - Need to be reviewed
+app.get("/user/tweets/feed/", authenticateToken, async (request, response) => {
+  const { username } = request;
 
+  const getIdQuery = `SELECT user_id from user WHERE username = '${username}'`;
+  const { user_id } = await db.get(getIdQuery);
+
+  const selectTweetsQuery = `
+  SELECT username, tweet, date_time AS dateTime
+  FROM user AS U
+  JOIN follower AS F ON U.user_id = F.following_user_id
+  JOIN tweet AS T ON F.following_user_id = T.user_id
+  WHERE 
+  F.following_user_id = ${user_id}
+  ORDER BY tweet_id
+  LIMIT 4;
+  `;
+
+  console.log(selectTweetsQuery);
+
+  const tweets = await db.all(selectTweetsQuery);
+  response.send(tweets);
+});
+
+//API 4
+app.get("/user/following/", authenticateToken, async (request, response) => {
+  const { username } = request;
+
+  const getIdQuery = `SELECT user_id from user WHERE username = '${username}'`;
+  const { user_id } = await db.get(getIdQuery);
+  console.log(user_id);
+
+  const selectFollowingQuery = `
+    SELECT name
+    FROM user AS U JOIN follower AS F
+    ON F.follower_user_id = U.user_id
+    WHERE F.following_user_id = '${user_id}';
+    `;
+
+  //   const selectFollowingQuery = `
+  //   SELECT unique(name)
+  //   FROM user NATURAL JOIN follower
+  //   WHERE following_user_id = '${user_id}';
+  //   `;
+
+  console.log(selectFollowingQuery);
+
+  const following = await db.all(selectFollowingQuery);
+  response.send(following);
+
+  //   console.log(selectTweetsQuery);
+
+  //   const tweets = await db.all(selectTweetsQuery);
+  //   response.send(tweets);
+});
+
+//API 5
+app.get("/user/followers/", authenticateToken, async (request, response) => {
+  const { username } = request;
+
+  const getIdQuery = `SELECT user_id from user WHERE username = '${username}'`;
+  const { user_id } = await db.get(getIdQuery);
+  console.log(user_id);
+
+  const selectFollowingQuery = `
+    SELECT name
+    FROM user AS U JOIN follower AS F
+    ON F.following_user_id = U.user_id
+    WHERE F.follower_user_id = '${user_id}';
+    `;
+
+  //   const selectFollowingQuery = `
+  //   SELECT unique(name)
+  //   FROM user NATURAL JOIN follower
+  //   WHERE following_user_id = '${user_id}';
+  //   `;
+
+  console.log(selectFollowingQuery);
+
+  const following = await db.all(selectFollowingQuery);
+  response.send(following);
+
+  //   console.log(selectTweetsQuery);
+
+  //   const tweets = await db.all(selectTweetsQuery);
+  //   response.send(tweets);
+});
 initializeDbAndServer();

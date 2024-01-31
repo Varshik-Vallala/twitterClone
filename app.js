@@ -148,22 +148,10 @@ app.get("/user/following/", authenticateToken, async (request, response) => {
     ON F.follower_user_id = U.user_id
     WHERE F.following_user_id = '${user_id}';
     `;
-
-  //   const selectFollowingQuery = `
-  //   SELECT unique(name)
-  //   FROM user NATURAL JOIN follower
-  //   WHERE following_user_id = '${user_id}';
-  //   `;
-
   console.log(selectFollowingQuery);
 
   const following = await db.all(selectFollowingQuery);
   response.send(following);
-
-  //   console.log(selectTweetsQuery);
-
-  //   const tweets = await db.all(selectTweetsQuery);
-  //   response.send(tweets);
 });
 
 //API 5
@@ -180,21 +168,9 @@ app.get("/user/followers/", authenticateToken, async (request, response) => {
     ON F.following_user_id = U.user_id
     WHERE F.follower_user_id = '${user_id}';
     `;
-
-  //   const selectFollowingQuery = `
-  //   SELECT unique(name)
-  //   FROM user NATURAL JOIN follower
-  //   WHERE following_user_id = '${user_id}';
-  //   `;
-
   console.log(selectFollowingQuery);
 
   const following = await db.all(selectFollowingQuery);
   response.send(following);
-
-  //   console.log(selectTweetsQuery);
-
-  //   const tweets = await db.all(selectTweetsQuery);
-  //   response.send(tweets);
 });
 initializeDbAndServer();

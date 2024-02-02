@@ -37,5 +37,49 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZ
 
 
 ###6
-GET http://localhost:3000/tweets/3/
+GET http://localhost:3000/tweets/2/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+
+
+
+###7
+GET http://localhost:3000/tweets/2/likes/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+
+
+
+###8
+GET http://localhost:3000/tweets/2/replies/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+
+
+
+###9
+GET http://localhost:3000/user/tweets/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+
+
+
+###10
+POST  http://localhost:3000/user/tweets/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+Content-Type: application/json
+
+{
+     "tweet": "The America has implemented a new borde rule..."
+}
+
+
+###11
+DELETE  http://localhost:3000/tweets/10/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvZUJpZGVuIiwiaWF0IjoxNzA2NzM2MjQ3fQ.M5w6oNRiQQdIpS5_LoD3bF8RzbGzqegH5cjCbDlQjLM
+
+
+
+
+
+
+
+
+
+
